@@ -1,4 +1,4 @@
-// quiz3.rs
+// quiz3.rs——trait bound有条件地实现方法
 //
 // This quiz tests:
 // - Generics
