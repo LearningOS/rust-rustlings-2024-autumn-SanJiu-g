@@ -1,4 +1,4 @@
-// tests4.rs
+// tests4.rs——should_panic检查panic
 //
 // Make sure that we're testing for the correct conditions!
 //
