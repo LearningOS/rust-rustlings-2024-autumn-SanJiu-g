@@ -1,4 +1,4 @@
-// tests7.rs
+// tests7.rs——设置环境变量
 //
 // When building packages, some dependencies can neither be imported in
 // `Cargo.toml` nor be directly linked; some preprocesses varies from code
@@ -34,7 +34,6 @@
 // Execute `rustlings hint tests7` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 fn main() {}
 
