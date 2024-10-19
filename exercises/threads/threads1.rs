@@ -1,4 +1,4 @@
-// threads1.rs——等待线程结束并获取结果进行返回
+// threads1.rs
 //
 // This program spawns multiple threads that each run for at least 250ms, and
 // each thread returns how much time they took to complete. The program should
