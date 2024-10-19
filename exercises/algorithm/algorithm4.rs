@@ -1,9 +1,8 @@
-/*
+/*——————青菜都没你菜
 	binary_search tree
 	This problem requires you to implement a basic interface for a binary tree
 */
 
-//I AM NOT DONE
 use std::cmp::Ordering;
 use std::fmt::Debug;
 
@@ -51,12 +50,29 @@ where
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
         //TODO
+        if let Some(root) = & mut self.root {
+            root.insert(value);//调用TreeNode的insert方法
+        }else{
+            self.root = Some(Box::new(TreeNode::new(value)));//树为空，创建根节点
+        }
     }
 
     // Search for a value in the BST
     fn search(&self, value: T) -> bool {
         //TODO
-        true
+        self.search_recursive(&self.root, value)
+    }
+
+    // 内部递归搜索函数
+    fn search_recursive(&self, node: &Option<Box<TreeNode<T>>>, value: T) -> bool {
+        match node {
+            Some(n) => match value.cmp(&n.value) {
+                Ordering::Less => self.search_recursive(&n.left, value),  // 在左子树中查找
+                Ordering::Greater => self.search_recursive(&n.right, value), // 在右子树中查找
+                Ordering::Equal => true, // 找到了
+            },
+            None => false, // 节点为空，查找失败
+        }
     }
 }
 
@@ -67,6 +83,24 @@ where
     // Insert a node into the tree
     fn insert(&mut self, value: T) {
         //TODO
+        match value.cmp(&self.value){
+            Ordering::Less=> {
+                if let Some(left) = &mut self.left {
+                    left.insert(value);
+                }else{
+                    self.left=Some(Box::new(TreeNode::new(value)));
+                }
+            }
+            Ordering::Greater=>{
+                if let Some(right)=&mut self.right {
+                    right.insert(value);
+                }else{
+                    self.right=Some(Box::new(TreeNode::new(value)));
+                }
+            }
+             Ordering::Equal=>{}
+            
+        }
     }
 }
 

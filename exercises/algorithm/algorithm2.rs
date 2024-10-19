@@ -1,8 +1,8 @@
-/*
+/*——————成年人要有自知之明
+
 	double linked list reverse
 	This problem requires you to reverse a doubly linked list
 */
-// I AM NOT DONE
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
@@ -74,6 +74,30 @@ impl<T> LinkedList<T> {
     }
 	pub fn reverse(&mut self){
 		// TODO
+        if self.start.is_none(){
+            return;
+        }
+
+        let mut cur=self.start;
+        let mut temp = None;
+
+        while let Some(mut cur_ptr)=cur {
+            //获取当前节点的可变引用
+            unsafe {
+                let cur_node = cur_ptr.as_mut();
+                //交换prev和next指针
+                temp=cur_node.prev;
+                cur_node.prev=cur_node.next;
+                cur_node.next=temp;
+            }
+            //移动到下一个节点，这里因为已经交换了指针，原本的prev是新的next
+            cur=unsafe{cur_ptr.as_ref().prev};
+        }
+        //最后交换链表的start和end指针
+        temp=self.start;
+        self.start=self.end;
+        self.end=temp;
+        
 	}
 }
 

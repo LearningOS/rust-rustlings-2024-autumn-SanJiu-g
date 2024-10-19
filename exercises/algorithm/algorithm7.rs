@@ -1,9 +1,8 @@
-/*
+/*————————你看我有几分进步
 	stack
 	This question requires you to use a stack to achieve a bracket match
 */
 
-// I AM NOT DONE
 #[derive(Debug)]
 struct Stack<T> {
 	size: usize,
@@ -32,7 +31,12 @@ impl<T> Stack<T> {
 	}
 	fn pop(&mut self) -> Option<T> {
 		// TODO
-		None
+		if self.size>0 {
+			self.size-=1;
+			self.data.pop()
+		}else{
+			None
+		}
 	}
 	fn peek(&self) -> Option<&T> {
 		if 0 == self.size {
@@ -102,7 +106,28 @@ impl<'a, T> Iterator for IterMut<'a, T> {
 fn bracket_match(bracket: &str) -> bool
 {
 	//TODO
-	true
+	let mut stack = Stack::new();
+	let pairs: std::collections::HashMap<char,char> = [
+		(')','('),
+		(']','['),
+		('}','{'),
+	].iter().cloned().collect();
+
+	for ch in bracket.chars() {
+		if pairs.values().any(|&v| v==ch){
+			stack.push(ch);
+		}else if pairs.contains_key(&ch) {
+			if let Some(opening) = stack.pop() {
+				if opening!=*pairs.get(&ch).unwrap() {
+					return false;
+				}
+			}else {
+					return false;
+			}
+		}
+	}
+
+	stack.is_empty()
 }
 
 #[cfg(test)]

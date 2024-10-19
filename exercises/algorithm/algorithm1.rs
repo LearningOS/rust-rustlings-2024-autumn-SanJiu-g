@@ -1,12 +1,12 @@
-/*
+/*GPT!!!没有你我怎么活啊GPT！！！！！！
 	single linked list merge
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
+
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
-use std::vec::*;
+// use std::vec::*;
 
 #[derive(Debug)]
 struct Node<T> {
@@ -29,13 +29,13 @@ struct LinkedList<T> {
     end: Option<NonNull<Node<T>>>,
 }
 
-impl<T> Default for LinkedList<T> {
+impl<T:Clone+Ord> Default for LinkedList<T> {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<T> LinkedList<T> {
+impl<T:Clone+Ord> LinkedList<T> {
     pub fn new() -> Self {
         Self {
             length: 0,
@@ -69,14 +69,39 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
+	pub fn merge( list_a:LinkedList<T>,  list_b:LinkedList<T>) -> Self
 	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+		let mut new_list = LinkedList::<T>::new();
+        let mut a_node = list_a.start;
+        let mut b_node = list_b.start;
+
+        // 合并两个链表，保证顺序
+        while a_node.is_some() || b_node.is_some() {
+            if let Some(a_ptr) = a_node {
+                let a_val = unsafe { &(*a_ptr.as_ptr()).val }.clone();
+                
+                if let Some(b_ptr) = b_node {
+                    let b_val = unsafe { &(*b_ptr.as_ptr()).val }.clone();
+                    
+                    if a_val <= b_val {
+                        new_list.add(a_val);
+                        a_node = unsafe { (*a_ptr.as_ptr()).next };
+                    } else {
+                        new_list.add(b_val);
+                        b_node = unsafe { (*b_ptr.as_ptr()).next };
+                    }
+                } else {
+                    new_list.add(a_val);
+                    a_node = unsafe { (*a_ptr.as_ptr()).next };
+                }
+            } else if let Some(b_ptr) = b_node {
+                let b_val = unsafe { &(*b_ptr.as_ptr()).val }.clone();
+                new_list.add(b_val);
+                b_node = unsafe { (*b_ptr.as_ptr()).next };
+            }
         }
+
+        new_list
 	}
 }
 
